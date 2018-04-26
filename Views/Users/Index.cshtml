@@ -1,0 +1,78 @@
+﻿@model IEnumerable<learn_json.Models.User>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Ajax and Json</h2>
+
+
+<form class="example" action="/Users/Index" method="get">
+    <input type="text" placeholder="Search.." name="search">
+    <button type="submit"><i class="fa fa-search"></i></button>
+</form>
+
+
+
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Username</th>
+            <th scope="col">Password</th>
+            <th scope="col">Email</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th scope="row">@item.id</th>
+                <td>@item.username</td>
+                <td>@item.password</td>
+                <td>@item.email</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@{
+    Html.RenderPartial("SearchPartialPage");
+} 
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("button[type=submit]").keyup(function () {
+            var s = $("input[type=text]").val();
+            console.log(s);
+            $.ajax({
+                url: "http://localhost:55760/Users/Index",
+                type: "Get",
+                contentType: "html",
+                data: { search: s },
+
+                succes: function (response) {
+                    $("body").html(response)
+                },
+                error: function () {
+                    alert("Try again")
+                }
+
+            });
+
+
+        });
+
+    });
+
+
+</script>
