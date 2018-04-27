@@ -4,12 +4,23 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+
+
 <h2>Ajax and Json</h2>
+
+<label class="label-info">Entries</label>
+<select class="custom-select">
+    <option selected>5</option>
+    <option>10</option>
+    <option>15</option>
+    <option>All</option>
+</select>
 
 
 <form class="example" action="/Users/Index" method="get">
-    <input type="text" placeholder="Search.." name="search">
-    <button type="submit"><i class="fa fa-search"></i></button>
+    <input type="text" placeholder="Search.." name="search" id="text" value="">
+    <button type="submit"><i class="fa fa-search" id="btn"></i></button>
 </form>
 
 
@@ -42,22 +53,40 @@
     </tbody>
 </table>
 
-@{
-    Html.RenderPartial("SearchPartialPage");
-} 
+<nav aria-label="Page navigation example" class="text-center">
+    <ul class="pagination">
+        <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+            </a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+            </a>
+        </li>
+    </ul>
+</nav>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
-</script>
+
+
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+</script>*@
 
 <script>
     $(document).ready(function () {
-        $("button[type=submit]").keyup(function () {
-            var s = $("input[type=text]").val();
-            console.log(s);
+        $("#btn").keyup(function () {
+            var s = $("#text").val();
+            //console.log(s);
             $.ajax({
                 url: "http://localhost:55760/Users/Index",
-                type: "Get",
-                contentType: "html",
+                contentType="text/html",
+                datatype: "HTML",
                 data: { search: s },
 
                 succes: function (response) {
@@ -76,3 +105,6 @@
 
 
 </script>
+
+
+

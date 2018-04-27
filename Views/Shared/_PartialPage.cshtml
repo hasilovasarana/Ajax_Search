@@ -1,0 +1,18 @@
+﻿@model  IEnumerable<learn_json.Models.User>
+
+
+@foreach (var item in Model)
+{
+    <tr>
+        <th scope="row">@item.id</th>
+        <td>@item.username</td>
+        <td>@item.password</td>
+        <td>@item.email</td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.id })
+        </td>
+    </tr>
+}
+

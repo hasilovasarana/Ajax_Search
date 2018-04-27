@@ -15,54 +15,55 @@ namespace learn_json.Controllers
         private UsersEntities db = new UsersEntities();
 
         // GET: Users
-        [HttpGet]
+       
         public ActionResult Index()
         {
             return View(db.Users.ToList());
         }
 
-        public ActionResult SearchPartialPage()
+        public ActionResult PartialPage(string search)
         {
-            return View("Index");
+            List<User> list = db.Users.Include(s => s.email.Contains(search) || s.username.Contains(search)).ToList();
+            return PartialView("PartialPage",list);
         }
 
         // GET: Users/Details/5
-        //public ActionResult Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    User user = db.Users.Find(id);
-        //    if (user == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(user);
-        //}
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            User user = db.Users.Find(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(user);
+        }
 
         // GET: Users/Create
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
+        public ActionResult Create()
+        {
+            return View();
+        }
 
-        //// POST: Users/Create
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "id,username,password,email")] User user)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Users.Add(user);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
+        // POST: Users/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "id,username,password,email")] User user)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Users.Add(user);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
 
-        //    return View(user);
-        //}
+            return View(user);
+        }
 
         // GET: Users/Edit/5
         public ActionResult Edit(int? id)

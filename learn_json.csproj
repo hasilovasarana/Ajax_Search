@@ -273,6 +273,7 @@
     <Content Include="test\pass2.json" />
     <Content Include="test\pass3.json" />
     <Content Include="test\test.bat" />
+    <Content Include="Views\Users\_PartialPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
